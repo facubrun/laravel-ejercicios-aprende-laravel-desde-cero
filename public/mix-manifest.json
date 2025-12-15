@@ -1,7 +1,4 @@
 {
     "/js/app.js": "/js/app.js",
-    "/js/welcome.js": "/js/welcome.js",
-    "/css/app.css": "/css/app.css",
-    "/img/background.jpg": "/img/background.jpg",
-    "/img/logo.png": "/img/logo.png"
+    "/css/app.css": "/css/app.css"
 }

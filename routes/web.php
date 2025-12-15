@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProductController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,12 +20,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Ejercicio 1
+Auth::routes();
 
-Route::get('/ejercicio1', function () {
-    return "GET OK";
-});
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::post('/ejercicio1', function () {
-    return "POST OK";
+Route::get('/contact', fn () => Response::view('contact'));
+
+Route::post('/contact', function(Request $request){
+    dd($request);
 });

@@ -1,8 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ContactController;
+use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,38 +28,5 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/contact', fn () => Response::view('contact'));
-
-Route::post('/contact', function(Request $request){
-    dd($request);
-});
-
-Route::post('/ejercicio2/a', fn(Request $request) => Response::json($request->all()));
-
-Route::post('/ejercicio2/b', function(Request $request) {
-    if($request->json('price') <= 0) {
-        return Response::json(['message' => 'Price can\'t be less than 0'], 422);
-    } else {
-        return Response::json($request->all());
-    }
-});
-
-Route::post('/ejercicio2/c', function(Request $request) {
-    $discount_code = $request->query('discount');
-    $discount = preg_match('/SAVE(\d{1,2})/', $discount_code, $matches);
-    $request_data = $request->all();
-    
-    if($discount > 0) {
-        $discount = (int)$matches[1];
-        $price = $request->input('price');
-        $discounted_price = $price - ($price * ($discount / 100));
-        
-        $request_data['price'] = $discounted_price;
-        $request_data['discount'] = $discount;
-        
-    } else {
-        $request_data['discount'] = 0;
-    }
-    
-    return Response::json($request_data);
-});
+Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
+Route::post('/contacts/', [ContactController::class, 'store'])->name('contacts.store');

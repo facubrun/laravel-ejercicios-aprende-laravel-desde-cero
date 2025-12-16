@@ -15,7 +15,7 @@
                   class="col-md-4 col-form-label text-md-end">Name</label>
 
                 <div class="col-md-6">
-                  <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                  <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"
                     autocomplete="name" autofocus>
                     @error('name')
                       <span class="invalid-feedback" role="alert">
@@ -31,7 +31,7 @@
 
                 <div class="col-md-6">
                   <input id="phone_number" type="tel" class="form-control @error('phone_number') is-invalid @enderror"
-                    name="phone_number" value="{{ old('phone_number') }}autocomplete="phone_number">
+                    name="phone_number" value="{{ old('phone_number') }}" autocomplete="phone_number">
                     @error('phone_number')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -46,7 +46,7 @@
 
                 <div class="col-md-6">
                   <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
-                    name="email" autocomplete="email">
+                    name="email" value="{{ old('email') }}" autocomplete="email">
                     @error('email')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -61,7 +61,7 @@
 
                 <div class="col-md-6">
                   <input id="age" type="number" class="form-control @error('age') is-invalid @enderror"
-                    name="age" autocomplete="age">
+                    name="age" value="{{ old('age') }}" autocomplete="age">
                     @error('age')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

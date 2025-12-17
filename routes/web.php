@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Models\Contact;
 use Illuminate\Http\Request;
@@ -27,9 +28,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
+
+Route::get('/contacts/{contact}/edit', [ContactController::class, 'edit'])->name('contacts.edit'); /* parametro contact, form edición */
+
+Route::put('/contacts/{contact}', [ContactController::class, 'update'])->name('contacts.update'); /* cambio en persistencia */
+
 Route::post('/contacts/', [ContactController::class, 'store'])->name('contacts.store');
 
 Route::post('/ejercicio3', [ProductController::class, 'store'])->name('products.store');

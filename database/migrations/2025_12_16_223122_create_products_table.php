@@ -20,9 +20,9 @@ return new class extends Migration
             $table->decimal('price', 8, 2); 
             $table->boolean('has_battery');
             $table->tinyInteger('battery_duration', unsigned: true)->nullable();
-            $table->json('colors');
-            $table->json('dimensions');
-            $table->json('accessories');
+            $table->text('colors');
+            $table->text('dimensions');
+            $table->text('accessories');
             $table->timestamps();
         });
     }

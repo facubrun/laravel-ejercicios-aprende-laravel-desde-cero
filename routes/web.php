@@ -2,13 +2,7 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductController;
-use App\Models\Contact;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,5 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn () => auth()->check() ? redirect('home') : view('welcome'));
 
 Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::resource('contacts', ContactController::class);

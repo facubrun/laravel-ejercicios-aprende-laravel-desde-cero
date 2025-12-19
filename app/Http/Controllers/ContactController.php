@@ -43,9 +43,12 @@ class ContactController extends Controller
     {
         $data = $request->validated();
 
-        auth()->user()->contacts()->create($data);
+        $contact = auth()->user()->contacts()->create($data);
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('alert', [
+            'message' => "Contact $contact->name successfully saved.", 
+            'type' => 'success'
+        ]);
     }
 
 
@@ -92,7 +95,10 @@ class ContactController extends Controller
 
         $contact->update($data);
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('alert', [
+            'message' => "Contact $contact->name successfully updated.", 
+            'type' => 'success'
+        ]);
     }
 
 
@@ -108,7 +114,10 @@ class ContactController extends Controller
 
         $contact->delete();
         
-        return redirect()->route('home');
+        return redirect()->route('home')->with('alert', [
+            'message' => "Contact $contact->name successfully deleted.", 
+            'type' => 'success'
+        ]);
     }
 
 }

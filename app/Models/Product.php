@@ -12,10 +12,11 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'has_battery',
-        'battery_duration',
-        'colors',
-        'dimensions',
-        'accessories',
+        'user_id',
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class); # relacion inversa a hasMany, un product pertenece a un user
+    }
+
 }

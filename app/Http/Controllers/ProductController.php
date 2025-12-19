@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = auth()->user()->products;
+        
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -24,7 +27,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
+
     }
 
     /**
@@ -33,23 +37,16 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:64',
-            'description' => 'required|string|max:512',
-            'price' => 'required|numeric|min:0',
-            'has_battery' => 'required|boolean',
-            'battery_duration' => 'nullable|integer|min:0',
-            'colors' => 'required|array',
-            'colors.*' => 'required|string',
-            'dimensions' => 'required|array',
-            'dimensions.*' => 'required|numeric|gt:0',
-            'accessories' => 'required|array',
-            'accessories.*.name' => 'required|string',
-            'accessories.*.price' => 'required|numeric|gt:0',
+        $data = $request->validated();
+
+        $product = auth()->user()->products()->create($data);
+
+        return response()->json([
+            'message' => 'Product created successfully',
+            'product' => $product
         ]);
-        return redirect()->route('home')->with('success', 'Product created.');
     }
 
     /**
@@ -60,7 +57,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -71,7 +68,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $this->authorize('update', $product);
+
+        return view('products.edit', compact('product'));
     }
 
     /**
@@ -81,9 +80,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(StoreProductRequest $request, Product $product)
     {
-        //
+        $this->authorize('update', $product);
+
+        $data = $request->validated();
+
+        $product->update($data);
+
+        return redirect()->route('products.index')->with('status', 'Product updated successfully');
     }
 
     /**
@@ -94,6 +99,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $this->authorize('delete', $product); # chequeo que usuario puede eliminar solo si es SU contacto
+
+        $product->delete();
+        
+        return redirect()->route('products.index')->with('status', 'Product deleted successfully');
     }
 }

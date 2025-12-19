@@ -19,7 +19,7 @@ class ContactController extends Controller
     {
         $contacts = auth()->user()->contacts; 
 
-        return view('contacts.index', ['contacts' => Contact::all()]);
+        return view('contacts.index', compact('contacts'));
     }
 
     /**

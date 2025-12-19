@@ -45,4 +45,8 @@ class User extends Authenticatable
     public function contacts() {
         return $this->hasMany(Contact::class); # relacion - un usuario tiene muchos contactos
     }
+
+    public function products() {
+        return $this->hasMany(Product::class); # relacion - un usuario tiene muchos productos
+    }
 }

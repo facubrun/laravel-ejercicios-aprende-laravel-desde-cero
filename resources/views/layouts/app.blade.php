@@ -19,6 +19,9 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -62,6 +65,12 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('contacts.create') }}">Create New Contact</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('products.index') }}">Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('products.create') }}">Create New Product</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

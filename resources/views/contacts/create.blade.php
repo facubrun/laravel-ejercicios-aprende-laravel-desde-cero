@@ -8,7 +8,7 @@
           <div class="card-header">Create New Contact</div>
 
           <div class="card-body">
-            <form method="POST" action="{{ route('contacts.store') }}">
+            <form method="POST" action="{{ route('contacts.store') }}" enctype="multipart/form-data">
               @csrf
               <div class="row mb-3">
                 <label for="name"
@@ -26,7 +26,7 @@
               </div>
 
               <div class="row mb-3">
-                <label for="email"
+                <label for="phone_number"
                   class="col-md-4 col-form-label text-md-end">Phone Number</label>
 
                 <div class="col-md-6">
@@ -70,6 +70,21 @@
                 </div>
               </div>
 
+
+              <div class="row mb-3">
+                <label for="profile_picture"
+                  class="col-md-4 col-form-label text-md-end">Profile Picture</label>
+
+                <div class="col-md-6">
+                  <input id="profile_picture" type="file" class="form-control @error('profile_picture') is-invalid @enderror"
+                    name="profile_picture">
+                    @error('profile_picture')
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+                </div>
+              </div>
               <div class="row mb-0">
                 <div class="col-md-6 offset-md-4">
                   <button type="submit" class="btn btn-primary">

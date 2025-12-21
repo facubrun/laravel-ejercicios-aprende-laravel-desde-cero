@@ -43,6 +43,10 @@ class ContactController extends Controller
     {
         $data = $request->validated();
 
+        if ($request->hasFile('profile_picture')){
+            $path = $request->file('profile_picture')->store('profiles', 'public');
+            $data['profile_picture'] = $path;
+        }
         $contact = auth()->user()->contacts()->create($data);
 
         return redirect()->route('home')->with('alert', [
@@ -92,6 +96,11 @@ class ContactController extends Controller
         $this->authorize('update', $contact);
 
         $data = $request->validated();
+
+        if ($request->hasFile('profile_picture')){
+            $path = $request->file('profile_picture')->store('profiles', 'public');
+            $data['profile_picture'] = $path;
+        }
 
         $contact->update($data);
 

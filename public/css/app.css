@@ -9,6 +9,12 @@
     background-position: center center;
     background-size: cover;
 }
+
+.profile-picture {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
 @charset "UTF-8";
 /*!
  * Bootstrap  v5.3.8 (https://getbootstrap.com/)

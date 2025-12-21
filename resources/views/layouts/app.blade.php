@@ -114,7 +114,7 @@
     </nav>
 
     <main class="py-4">
-      @if ($alert = session()->has('alert')) <!-- asignación y evaluación -->
+      @if ($alert = session()->get('alert')) <!-- asignación y evaluación -->
         <x-alert :type="$alert['type']" :message="$alert['message']" />
       @endif
       @yield('content')

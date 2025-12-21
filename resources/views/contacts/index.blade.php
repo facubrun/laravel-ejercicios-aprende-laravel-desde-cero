@@ -7,8 +7,7 @@
         <div>
           <a href="{{ route('contacts.show', $contact->id) }}"
             class="text-decoration-none text-white">
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
-              alt="contact icon" width="30" height="30">
+            <img class="profile-picture" src="storage/{{ $contact->profile_picture }}">
           </a>
         </div>
         <div class="d-flex align-items-center">

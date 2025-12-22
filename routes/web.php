@@ -25,9 +25,10 @@ Auth::routes();
 
 Route::get('/billing-portal', [StripeController::class, 'billingPortal'])->name('billing-portal');
 Route::get('/checkout', [StripeController::class, 'checkout'])->name('checkout');
+Route::get('/free-trial-end', [StripeController::class, 'freeTrialEnd'])->name('free-trial-end');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-Route::middleware('auth')->resource('contacts', ContactController::class);
-
-Route::resource('products', ProductController::class);
+Route::middleware(['auth', 'subscription'])->group(function(){
+    Route::get('/home', [HomeController::class, 'index'])->name('home');    
+    Route::resource('contacts', ContactController::class);
+    Route::resource('products', ProductController::class);
+});

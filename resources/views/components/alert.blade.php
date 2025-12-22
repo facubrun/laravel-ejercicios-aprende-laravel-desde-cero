@@ -27,7 +27,7 @@
             <use xlink:href="#{{ $type }}" />
         </svg>
         <div>
-            {{ $message }}
+            {!! $message !!} <!-- Allow HTML content in the message -->
         </div>
         </div>
     </div>

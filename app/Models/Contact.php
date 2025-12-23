@@ -21,4 +21,8 @@ class Contact extends Model
     public function user() {
         return $this->belongsTo(User::class); # relacion inversa a hasMany, un contacto pertenece a un usuario
     }
+
+    public function sharedWithUsers(){
+        return $this->belongsToMany(User::class, 'contact_shares');
+    }
 }

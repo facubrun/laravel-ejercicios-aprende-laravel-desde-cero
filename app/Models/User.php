@@ -51,4 +51,8 @@ class User extends Authenticatable
     public function products() {
         return $this->hasMany(Product::class); # relacion - un usuario tiene muchos productos
     }
+
+    public function sharedContacts(){
+        return $this->belongsToMany(Contact::class, 'contact_shares');
+    }
 }

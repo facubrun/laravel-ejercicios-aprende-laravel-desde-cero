@@ -5,10 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class ContactShareController extends Controller
 {
+
+    public function index(){
+        
+        $contactsSharedWithUser = auth()->user()->sharedContacts()->with('user')->get();
+        $contactsSharedByUser = auth()
+            ->user()
+            ->contacts()
+            ->with(['sharedWithUsers' => fn($query) => $query->withPivot('id')])
+            ->get()
+            ->filter(fn($contact) => $contact->sharedWithUsers->isNotEmpty());
+
+        return view('contact-shares.index', compact('contactsSharedWithUser', 'contactsSharedByUser'));
+    }
+
     public function create(){
         return view('contact-shares.create');        
     }
@@ -37,5 +52,19 @@ class ContactShareController extends Controller
             'message' => "Contact {$contact->email} shared with {$user->email} successfully.", 
             'type' => 'success'
         ]);
+    }
+
+    public function destroy(int $id){
+        $contactShare = DB::selectOne('SELECT * FROM contact_shares WHERE id = ?', [$id]);
+
+        $contact = Contact::findOrFail($contactShare->contact_id);
+        abort_if($contact->user_id !== auth()->id(), 403); # solo el dueño del contacto puede dejar de compartirlo
+
+        $contact->sharedWithUsers()->detach($contactShare->user_id); # elimino al usuario de la tabla pivote
+
+        return redirect()->route('contact-shares.index')->with('alert', [
+            'message' => "Contact {$contact->email} unshared.", 
+            'type' => 'success'
+        ]); 
     }
 }

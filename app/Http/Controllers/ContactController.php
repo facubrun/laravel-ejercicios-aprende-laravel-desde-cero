@@ -6,6 +6,7 @@ use App\Http\Requests\StoreContactRequest;
 use App\Models\Contact;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ContactController extends Controller
 {
@@ -53,6 +54,7 @@ class ContactController extends Controller
         }
         $contact = auth()->user()->contacts()->create($data);
 
+        Cache::forget(auth()->id()); // limpiar cache del user al crear nuevo contacto
         return redirect()->route('home')->with('alert', [
             'message' => "Contact $contact->name successfully saved.", 
             'type' => 'success'
@@ -108,6 +110,8 @@ class ContactController extends Controller
 
         $contact->update($data);
 
+        Cache::forget(auth()->id()); // limpiar cache del user al actualizar contacto
+
         return redirect()->route('home')->with('alert', [
             'message' => "Contact $contact->name successfully updated.", 
             'type' => 'success'
@@ -126,6 +130,8 @@ class ContactController extends Controller
         $this->authorize('delete', $contact); # chequeo que usuario puede eliminar solo si es SU contacto
 
         $contact->delete();
+
+        Cache::forget(auth()->id()); // limpiar cache del user al eliminar contacto
         
         return back()->with('alert', [
             'message' => "Contact $contact->name successfully deleted.", 

@@ -30,6 +30,15 @@ class ContactShareController extends Controller
         return view('contact-shares.create');        
     }
 
+    public function show(Contact $contact_share){
+        // Verificar que el contacto fue compartido con el usuario autenticado
+        $isShared = $contact_share->sharedWithUsers()->where('user_id', auth()->id())->exists();
+        
+        abort_unless($isShared, 403);
+        
+        return view('contacts.show', ['contact' => $contact_share]);
+    }
+
     public function store(Request $request){
         $data = $request->validate([
             'contact_email' => Rule::exists('contacts', 'email')->where('user_id', auth()->id()),

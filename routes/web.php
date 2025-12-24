@@ -34,6 +34,6 @@ Route::middleware(['auth', 'subscription'])->group(function(){
     Route::get('/home', [HomeController::class, 'index'])->name('home');    
     Route::resource('contacts', ContactController::class);
     Route::resource('products', ProductController::class);
-    Route::resource('contact-shares', ContactShareController::class)->except(['show', 'edit', 'update']);
+    Route::resource('contact-shares', ContactShareController::class)->except(['edit', 'update']);
     Route::resource('tokens', TokenController::class)->only(['create', 'store']);
 });

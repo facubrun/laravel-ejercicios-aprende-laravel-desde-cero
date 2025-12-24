@@ -65,18 +65,20 @@ class ContactControllerTest extends TestCase
             'phone_number' => '123456789',
         ]);
 
+        // Test update - must send valid data for validation to pass
         $response = $this->actingAs($notOwner)
             ->put(route('contacts.update', $contact->id), [
-                $contact->getAttributes()
+                'name' => 'Updated Name',
+                'phone_number' => '123456789',
+                'age' => 25,
+                'email' => 'updated@example.com',
             ]);
             
         $response->assertStatus(403); // Forbidden porque no es el dueño
         
 
         $response = $this->actingAs($notOwner)
-            ->delete(route('contacts.destroy', $contact->id), [
-                $contact->getAttributes()
-            ]);
+            ->delete(route('contacts.destroy', $contact->id));
             
         $response->assertStatus(403); // Forbidden porque no es el dueño
     }       

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -26,7 +27,6 @@ class ProductController extends Controller
     public function create()
     {
         return view('products.create');
-
     }
 
     /**
@@ -41,6 +41,7 @@ class ProductController extends Controller
 
         $product = auth()->user()->products()->create($data);
 
+        Log::info('Product created', ['product' => $product]);
         return response()->json([
             'message' => 'Product created successfully',
             'product' => $product
@@ -99,6 +100,7 @@ class ProductController extends Controller
     {
         $this->authorize('delete', $product); # chequeo que usuario puede eliminar solo si es SU contacto
 
+        Log::info('Product deleted', ['product' => $product]);
         $product->delete();
         
         return redirect()->route('products.index')->with('status', 'Product deleted successfully');
